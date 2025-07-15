@@ -21,6 +21,7 @@ import com.soarclient.utils.language.Language;
 public class Soar {
 
 	private final static Soar instance = new Soar();
+	public static EventManager eventManager;
 
 	private final String name = "Soar-CN";
 	private final String version = "8.1";
@@ -57,7 +58,7 @@ public class Soar {
 		EventBus.getInstance().register(new SoarHandler());
 		EventBus.getInstance().register(new PacketHandler());
 		EventBus.getInstance().register(new Delta());
-		EventManager eventManager = new EventManager();
+		eventManager = new EventManager();
 	}
 
 	public static Soar getInstance() {
