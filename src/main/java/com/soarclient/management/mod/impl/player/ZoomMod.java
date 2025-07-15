@@ -51,13 +51,13 @@ public class ZoomMod extends Mod {
 			if (!active) {
 				active = true;
 				resetFactor();
-				wasSmooth = client.options.smoothCameraEnabled;
-				client.options.smoothCameraEnabled = smoothCameraSetting.isEnabled();
+				wasSmooth = mc.options.smoothCameraEnabled;
+				mc.options.smoothCameraEnabled = smoothCameraSetting.isEnabled();
 			}
 		} else if (active) {
 			active = false;
 			setFactor(1);
-			client.options.smoothCameraEnabled = wasSmooth;
+			mc.options.smoothCameraEnabled = wasSmooth;
 		}
 	};
 

@@ -17,8 +17,11 @@ public class HealthDisplayMod extends SimpleHUDMod {
 
 	@Override
 	public String getText() {
-		return (int) client.player.getHealth() + " Health";
-	}
+        if (mc.player != null) {
+            return (int) mc.player.getHealth() + " Health";
+        }
+        return "";
+    }
 
 	@Override
 	public String getIcon() {

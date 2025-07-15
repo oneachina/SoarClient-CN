@@ -34,11 +34,11 @@ public class KeystrokesMod extends HUDMod {
 	public KeystrokesMod() {
 		super("mod.keystrokes.name", "mod.keystrokes.description", Icon.KEYBOARD);
 
-		panels.add(new Panel(client.options.forwardKey, 32, 0));
-		panels.add(new Panel(client.options.leftKey, 0, 32));
-		panels.add(new Panel(client.options.backKey, 32, 32));
-		panels.add(new Panel(client.options.rightKey, 64, 32));
-		panels.add(new Panel(client.options.jumpKey, 0, 64, 92, 22, true));
+		panels.add(new Panel(mc.options.forwardKey, 32, 0));
+		panels.add(new Panel(mc.options.leftKey, 0, 32));
+		panels.add(new Panel(mc.options.backKey, 32, 32));
+		panels.add(new Panel(mc.options.rightKey, 64, 32));
+		panels.add(new Panel(mc.options.jumpKey, 0, 64, 92, 22, true));
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class KeystrokesMod extends HUDMod {
 			boolean isKeyDown = snapTapSetting.isEnabled() ? keyBinding.isPressed()
 					: ((IMixinKeyBinding) keyBinding).getRealIsPressed();
 
-			if (isKeyDown && animation.getEnd() != 1 && client.currentScreen == null) {
+			if (isKeyDown && animation.getEnd() != 1 && mc.currentScreen == null) {
 				animation = new EaseStandard(Duration.MEDIUM_3, animation.getValue(), 1);
 			} else if (!isKeyDown && animation.getEnd() != 0) {
 				animation = new EaseStandard(Duration.MEDIUM_3, animation.getValue(), 0);

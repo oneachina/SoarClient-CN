@@ -17,9 +17,12 @@ public class CoordsMod extends SimpleHUDMod {
 
 	@Override
 	public String getText() {
-		return "X: " + (int) client.player.getX() + " Y: " + (int) client.player.getY() + " Z: "
-				+ (int) client.player.getZ();
-	}
+		if (mc.player != null) {
+			return "X: " + (int) mc.player.getX() + " Y: " + (int) mc.player.getY() + " Z: "
+					+ (int) mc.player.getZ();
+		}
+        return "";
+    }
 
 	@Override
 	public String getIcon() {

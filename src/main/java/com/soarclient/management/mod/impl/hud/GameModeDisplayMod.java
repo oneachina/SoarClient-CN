@@ -20,9 +20,9 @@ public class GameModeDisplayMod extends SimpleHUDMod {
 
 		String prefix = "Mode: ";
 
-		if (client.player.isCreative()) {
+		if (mc.player.isCreative()) {
 			return prefix + "Creative";
-		} else if (client.player.isSpectator()) {
+		} else if (mc.player.isSpectator()) {
 			return prefix + "Spectator";
 		} else {
 			return prefix + "Survival";

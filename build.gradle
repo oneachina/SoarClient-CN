@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import proguard.gradle.ProGuardTask
+
 buildscript {
     repositories {
         mavenCentral()
@@ -61,7 +64,7 @@ dependencies {
 	modRuntimeOnly "maven.modrinth:sodium-extra:mc1.21.4-0.6.1+fabric"
 	modRuntimeOnly "maven.modrinth:lithium:mc1.21.4-0.14.7-fabric"
 	modRuntimeOnly "maven.modrinth:in-game-account-switcher:WBbjirJP"
-	modRuntimeOnly "com.viaversion:viafabricplus:4.0.2"
+    modImplementation "com.viaversion:viafabricplus:4.0.2"
 	modRuntimeOnly "maven.modrinth:immediatelyfast:1.3.3+1.21.4-fabric"
 	modRuntimeOnly "maven.modrinth:entityculling:NkBXk0Ye"
 
@@ -104,7 +107,6 @@ dependencies {
             }))
         }
     }
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 processResources {
@@ -119,9 +121,9 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 }
 
@@ -130,11 +132,11 @@ java {
 
 }
 
-task proguard(type: proguard.gradle.ProGuardTask) {
+tasks.register('proguard', ProGuardTask) {
     dependsOn jar
     injars jar.archiveFile
     outjars "build/libs/${project.archives_base_name}-${version}-proguarded.jar"
-    
+
     fileTree("${System.properties['java.home']}\\jmods\\") {
         forEach() {
             libraryjars "${it.path}"
@@ -142,17 +144,17 @@ task proguard(type: proguard.gradle.ProGuardTask) {
     }
 
     libraryjars configurations.compileClasspath
-    
+
     dontwarn '**'
 
     keepattributes 'Signature,*Annotation*,Exceptions'
-    
+
     keep 'class com.soarclient.mixin.mixins** { *; }'
     keeppackagenames 'com.soarclient.mixin.mixins**'
-    
+
     renamesourcefileattribute 'SourceFile'
     repackageclasses ''
-    
+
     useuniqueclassmembernames
     dontusemixedcaseclassnames
     dontoptimize

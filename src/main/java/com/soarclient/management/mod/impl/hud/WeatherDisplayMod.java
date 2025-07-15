@@ -25,8 +25,8 @@ public class WeatherDisplayMod extends SimpleHUDMod {
 	public String getText() {
 
 		String prefix = "Weather: ";
-		ClientWorld world = client.world;
-		ClientPlayerEntity player = client.player;
+		ClientWorld world = mc.world;
+		ClientPlayerEntity player = mc.player;
 		BlockPos playerPos = player.getBlockPos();
 		RegistryEntry<Biome> biomeEntry = world.getBiome(playerPos);
 
@@ -48,8 +48,8 @@ public class WeatherDisplayMod extends SimpleHUDMod {
 	@Override
 	public String getIcon() {
 
-		ClientWorld world = client.world;
-		ClientPlayerEntity player = client.player;
+		ClientWorld world = mc.world;
+		ClientPlayerEntity player = mc.player;
 		BlockPos playerPos = player.getBlockPos();
 		RegistryEntry<Biome> biomeEntry = world.getBiome(playerPos);
 

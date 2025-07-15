@@ -46,7 +46,7 @@ public class BedwarsStatsOverlayMod extends HUDMod {
 
 		if (ServerUtils.isJoin(Server.HYPIXEL)) {
 
-			for (PlayerListEntry player : client.getNetworkHandler().getPlayerList()) {
+			for (PlayerListEntry player : mc.getNetworkHandler().getPlayerList()) {
 
 				if (player.getProfile() == null) {
 					continue;

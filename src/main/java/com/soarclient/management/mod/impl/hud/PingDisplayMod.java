@@ -11,6 +11,8 @@ import com.soarclient.utils.server.ServerUtils;
 
 import net.lenni0451.mcping.MCPing;
 
+import java.util.Objects;
+
 public class PingDisplayMod extends SimpleHUDMod {
 
 	private TimerUtils timer = new TimerUtils();
@@ -33,16 +35,16 @@ public class PingDisplayMod extends SimpleHUDMod {
 		if (timer.delay((long) (1000 * refreshTimeSetting.getValue()))) {
 
 			if (ServerUtils.isMultiplayer()) {
-				if (client.getCurrentServerEntry().ping <= 1 && !pinging) {
+				if (Objects.requireNonNull(mc.getCurrentServerEntry()).ping <= 1 && !pinging) {
 					Multithreading.runAsync(() -> {
 						pinging = true;
-						ping = MCPing.pingModern().address(client.getCurrentServerEntry().address).getSync().getPing();
+						ping = MCPing.pingModern().address(mc.getCurrentServerEntry().address).getSync().getPing();
 						pinging = false;
 					});
 				} else {
-					ping = client.getCurrentServerEntry().ping;
+					ping = mc.getCurrentServerEntry().ping;
 				}
-			} else if (client.isIntegratedServerRunning()) {
+			} else if (mc.isIntegratedServerRunning()) {
 				ping = 0;
 			}
 

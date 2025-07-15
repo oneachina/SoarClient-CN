@@ -68,12 +68,12 @@ public class TaplookMod extends Mod {
 				: Perspective.THIRD_PERSON_BACK;
 
 		active = true;
-		prevPerspective = client.options.getPerspective();
-		client.options.setPerspective(perspective);
+		prevPerspective = mc.options.getPerspective();
+		mc.options.setPerspective(perspective);
 	}
 
 	private void stop() {
 		active = false;
-		client.options.setPerspective(prevPerspective);
+		mc.options.setPerspective(prevPerspective);
 	}
 }

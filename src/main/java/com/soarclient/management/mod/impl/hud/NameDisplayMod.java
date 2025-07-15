@@ -17,7 +17,7 @@ public class NameDisplayMod extends SimpleHUDMod {
 
 	@Override
 	public String getText() {
-		return "Name: " + client.player.getGameProfile().getName();
+		return "Name: " + mc.player.getGameProfile().getName();
 	}
 
 	@Override

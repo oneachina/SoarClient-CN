@@ -33,11 +33,11 @@ public class ReachDisplayMod extends SimpleHUDMod {
 
 		if (event.getEntityId() == possibleTarget) {
 
-			Entity entity = client.world.getEntityById(event.getEntityId());
+			Entity entity = mc.world.getEntityById(event.getEntityId());
 
 			possibleTarget = -1;
-			distance = client.player.getEyePos()
-					.distanceTo(closestPointToBox(client.player.getEyePos(), entity.getBoundingBox()));
+			distance = mc.player.getEyePos()
+					.distanceTo(closestPointToBox(mc.player.getEyePos(), entity.getBoundingBox()));
 			hitTime = System.currentTimeMillis();
 		}
 	};

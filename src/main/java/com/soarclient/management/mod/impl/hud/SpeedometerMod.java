@@ -27,9 +27,9 @@ public class SpeedometerMod extends SimpleHUDMod {
 
 		String suffix = " m/s";
 		
-		if (client.player != null) {
+		if (mc.player != null) {
 			
-			Entity entity = client.player.getVehicle() == null ? client.player : client.player.getVehicle();
+			Entity entity = mc.player.getVehicle() == null ? mc.player : mc.player.getVehicle();
 			Vec3d vec = entity.getMovement();
 			
 			if (entity.isOnGround() && vec.y < 0) {
