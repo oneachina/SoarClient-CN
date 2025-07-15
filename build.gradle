@@ -5,11 +5,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.guardsquare:proguard-gradle:7.6.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"
     }
 }
 
 plugins {
 	id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 project.ext.lwjglVersion = "3.3.3"
@@ -48,8 +50,8 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.4+kotlin.2.2.0")
 
 	modImplementation "com.viaversion:viafabricplus-api:4.0.2"
 
@@ -99,6 +101,7 @@ dependencies {
             }))
         }
     }
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 processResources {
@@ -116,8 +119,6 @@ tasks.withType(JavaCompile).configureEach {
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
 }
 
 task proguard(type: proguard.gradle.ProGuardTask) {
@@ -152,4 +153,7 @@ task proguard(type: proguard.gradle.ProGuardTask) {
 remapJar {
     dependsOn proguard
     input = file("build/libs/${project.archives_base_name}-${version}-proguarded.jar")
+}
+kotlin {
+    jvmToolchain(21)
 }
