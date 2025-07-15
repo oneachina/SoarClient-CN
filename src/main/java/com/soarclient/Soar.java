@@ -21,8 +21,8 @@ public class Soar {
 
 	private final static Soar instance = new Soar();
 
-	private final String name = "Soar";
-	private final String version = "8.0";
+	private final String name = "Soar-CN";
+	private final String version = "8.1";
 
 	private long launchTime;
 
@@ -36,7 +36,6 @@ public class Soar {
 	private HypixelManager hypixelManager;
 
 	public void start() {
-
 		JCefBrowser.download();
 		Fonts.loadAll();
 		FileLocation.init();

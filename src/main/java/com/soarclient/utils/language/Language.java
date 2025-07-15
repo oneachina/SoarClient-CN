@@ -1,7 +1,8 @@
 package com.soarclient.utils.language;
 
 public enum Language {
-	ENGLISH("en");
+	ENGLISH("en"),
+	CHINESE("cn");
 
 	private final String id;
 

@@ -306,3 +306,10 @@ setting.opacity=Opacity
 setting.opacity.description=Set the opacity
 setting.left=Left
 setting.right=Right
+setting.language=Language
+setting.language.description=Set the language
+setting.language.english=English
+setting.language.chinese=Chinese
+
+language.english=English
+language.chinese=中文
