@@ -11,12 +11,13 @@ buildscript {
 
 plugins {
 	id 'fabric-loom' version '1.9-SNAPSHOT'
-    id 'org.jetbrains.kotlin.jvm'
 }
 
 project.ext.lwjglVersion = "3.3.3"
 version = project.mod_version
 group = project.maven_group
+
+apply plugin: "org.jetbrains.kotlin.jvm"
 
 base {
 	archivesName = project.archives_base_name
@@ -79,6 +80,8 @@ dependencies {
 
 	proguard 'com.guardsquare:proguard-base:7.6.1'
 
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+
     def lwjglNfdDeps = [
         "org.lwjgl:lwjgl-nfd:$lwjglVersion",
         "org.lwjgl:lwjgl-nfd::natives-linux",
@@ -114,6 +117,12 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 java {
