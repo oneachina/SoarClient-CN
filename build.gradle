@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import proguard.gradle.ProGuardTask
 
 buildscript {
@@ -8,7 +7,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.guardsquare:proguard-gradle:7.6.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"
     }
 }
 
@@ -20,7 +18,6 @@ project.ext.lwjglVersion = "3.3.3"
 version = project.mod_version
 group = project.maven_group
 
-apply plugin: "org.jetbrains.kotlin.jvm"
 
 base {
 	archivesName = project.archives_base_name
@@ -55,7 +52,6 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.4+kotlin.2.2.0")
 
 	modImplementation "com.viaversion:viafabricplus-api:4.0.2"
 
@@ -121,12 +117,6 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 }
 
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "21"
-    }
-}
-
 java {
 	withSourcesJar()
 
@@ -164,7 +154,4 @@ tasks.register('proguard', ProGuardTask) {
 remapJar {
     dependsOn proguard
     input = file("build/libs/${project.archives_base_name}-${version}-proguarded.jar")
-}
-kotlin {
-    jvmToolchain(21)
 }
