@@ -31,17 +31,17 @@ public class BloodParticleMod extends Mod {
 
 	public final EventBus.EventListener<AttackEntityEvent> onAttackEntity = event -> {
 
-		Entity target = client.world.getEntityById(event.getEntityId());
+		Entity target = mc.world.getEntityById(event.getEntityId());
 
 		if (target != null && target instanceof LivingEntity) {
 			for (int i = 0; i < multiplierSetting.getValue(); i++) {
-				client.particleManager.addEmitter(target,
+				mc.particleManager.addEmitter(target,
 						new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.REDSTONE_BLOCK.getDefaultState()));
 			}
 		}
 
 		if (soundSetting.isEnabled() && target != null) {
-			client.getSoundManager()
+			mc.getSoundManager()
 					.play(new PositionedSoundInstance(SoundEvents.BLOCK_STONE_BREAK.id(), SoundCategory.BLOCKS, 4.0F,
 							1.2F, SoundInstance.createRandom(), false, 0, SoundInstance.AttenuationType.LINEAR,
 							target.getX(), target.getY(), target.getZ(), false));

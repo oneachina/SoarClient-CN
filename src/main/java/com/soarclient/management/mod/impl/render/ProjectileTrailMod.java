@@ -29,24 +29,24 @@ public class ProjectileTrailMod extends Mod {
 
 	public final EventBus.EventListener<ClientTickEvent> onClientTick = event -> {
 
-		if (client.player != null && client.world != null) {
+		if (mc.player != null && mc.world != null) {
 
-			Box box = new Box(client.player.getPos().add(-150.0, -150.0, -150.0),
-					client.player.getPos().add(150.0, 150.0, 150.0));
+			Box box = new Box(mc.player.getPos().add(-150.0, -150.0, -150.0),
+					mc.player.getPos().add(150.0, 150.0, 150.0));
 
-			for (ProjectileEntity projectile : client.world.getEntitiesByClass(ProjectileEntity.class, box,
+			for (ProjectileEntity projectile : mc.world.getEntitiesByClass(ProjectileEntity.class, box,
 					entity -> true)) {
 
 				if (!(projectile.getVelocity().lengthSquared() > 0.01) || projectile.isOnGround()
-						|| client.world.getBlockState(projectile.getBlockPos()).isSolidBlock(client.world,
-								projectile.getBlockPos()) && projectile.getOwner().getId() != client.player.getId()) {
+						|| mc.world.getBlockState(projectile.getBlockPos()).isSolidBlock(mc.world,
+								projectile.getBlockPos()) && projectile.getOwner().getId() != mc.player.getId()) {
 					continue;
 				}
 
 				ParticleType<?> type = getCurrentType();
 
 				if (type != null && type instanceof ParticleEffect) {
-					client.world.addParticle((ParticleEffect) type, projectile.getX(), projectile.getY(),
+					mc.world.addParticle((ParticleEffect) type, projectile.getX(), projectile.getY(),
 							projectile.getZ(), 0.0, 0.0, 0.0);
 				}
 			}

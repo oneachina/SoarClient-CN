@@ -40,27 +40,27 @@ public class ParticlesMod extends Mod {
 
 		int sharpnessAmount = (int) sharpnessAmountSetting.getValue();
 		int criticalsAmount = (int) criticalsAmountSetting.getValue();
-		Entity target = client.world.getEntityById(event.getEntityId());
-		ClientPlayerEntity player = client.player;
+		Entity target = mc.world.getEntityById(event.getEntityId());
+		ClientPlayerEntity player = mc.player;
 
 		boolean critical = criticalsSetting.isEnabled() && player.getAttackCooldownProgress(0.5F) > 0.9F
 				&& !player.isOnGround() && !player.isClimbing() && !player.isTouchingWater()
 				&& !player.hasStatusEffect(StatusEffects.BLINDNESS) && !player.hasVehicle()
 				&& target instanceof LivingEntity && !player.isSprinting();
 		boolean alwaysSharpness = alwaysSharpnessSetting.isEnabled();
-		boolean sharpness = sharpnessSetting.isEnabled() && EnchantmentHelper.getLevel(client.world.getRegistryManager()
+		boolean sharpness = sharpnessSetting.isEnabled() && EnchantmentHelper.getLevel(mc.world.getRegistryManager()
 				.getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.SHARPNESS), player.getWeaponStack()) > 0;
 		boolean alwaysCriticals = alwaysCriticalsSetting.isEnabled();
 
 		if (critical || alwaysCriticals) {
 			for (int i = 0; i < criticalsAmount - 1; i++) {
-				client.particleManager.addEmitter(target, ParticleTypes.CRIT);
+				mc.particleManager.addEmitter(target, ParticleTypes.CRIT);
 			}
 		}
 
 		if (alwaysSharpness || sharpness) {
 			for (int i = 0; i < sharpnessAmount - 1; i++) {
-				client.particleManager.addEmitter(target, ParticleTypes.ENCHANTED_HIT);
+				mc.particleManager.addEmitter(target, ParticleTypes.ENCHANTED_HIT);
 			}
 		}
 	};

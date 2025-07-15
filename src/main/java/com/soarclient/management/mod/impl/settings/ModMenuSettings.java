@@ -97,7 +97,7 @@ public class ModMenuSettings extends Mod {
 			if (modMenu == null) {
 				modMenu = new GuiModMenu().build();
 			}
-			client.setScreen(modMenu);
+			mc.setScreen(modMenu);
 		}
 
 		handleLanguageChange();
