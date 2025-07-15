@@ -18,6 +18,10 @@ import net.minecraft.client.render.RenderTickCounter;
 @Mixin(InGameHud.class)
 public class MixinInGameHud {
 
+	/**
+	 * @author EldoDebug
+	 * @reason drawHeart
+	 */
 	@Overwrite
 	private void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half) {
 		
