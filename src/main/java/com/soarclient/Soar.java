@@ -13,6 +13,7 @@ import com.soarclient.management.profile.ProfileManager;
 import com.soarclient.management.user.UserManager;
 import com.soarclient.management.websocket.WebSocketManager;
 import com.soarclient.skia.font.Fonts;
+import com.soarclient.skid.events.EventManager;
 import com.soarclient.utils.file.FileLocation;
 import com.soarclient.utils.language.I18n;
 import com.soarclient.utils.language.Language;
@@ -56,6 +57,7 @@ public class Soar {
 		EventBus.getInstance().register(new SoarHandler());
 		EventBus.getInstance().register(new PacketHandler());
 		EventBus.getInstance().register(new Delta());
+		EventManager eventManager = new EventManager();
 	}
 
 	public static Soar getInstance() {
