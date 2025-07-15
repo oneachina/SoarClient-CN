@@ -114,6 +114,10 @@ public abstract class MixinMinecraftClient implements IMixinMinecraftClient {
 		}
 	}
 
+	/**
+	 * @author EldoDebug
+	 * @reason updateWindowTitle
+	 */
 	@Overwrite
 	public void updateWindowTitle() {
 		this.window.setTitle(Soar.getInstance().getName() + " Client v" + Soar.getInstance().getVersion() + " for "
