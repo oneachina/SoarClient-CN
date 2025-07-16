@@ -19,10 +19,4 @@ public class NoJumpDelayMod extends Mod {
 	public static NoJumpDelayMod getInstance() {
 		return instance;
 	}
-
-	@Override
-	public void onUpdate(UpdateEvent event) {
-		if (IMinecraft.mc.player == null || !IMinecraft.mc.player.isOnGround()) return;
-		mc.player.jumpingCooldown = 0;
-	}
 }
