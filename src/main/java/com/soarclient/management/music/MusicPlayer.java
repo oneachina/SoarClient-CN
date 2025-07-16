@@ -60,7 +60,7 @@ public class MusicPlayer implements Runnable {
 				streamInfo = decoder.readStreamInfo();
 				audioFormat = new AudioFormat(streamInfo.getSampleRate(),
 						streamInfo.getBitsPerSample() == 24 ? 16 : streamInfo.getBitsPerSample(),
-						streamInfo.getChannels(), (streamInfo.getBitsPerSample() <= 8) ? false : true, false);
+						streamInfo.getChannels(), streamInfo.getBitsPerSample() > 8, false);
 				info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
 				sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);

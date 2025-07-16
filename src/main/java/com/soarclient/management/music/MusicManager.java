@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.imageio.ImageIO;
 
+import com.soarclient.Soar;
 import com.soarclient.libraries.flac.FLACDecoder;
 import com.soarclient.libraries.flac.metadata.Metadata;
 import com.soarclient.libraries.flac.metadata.Picture;
@@ -32,7 +34,7 @@ public class MusicManager {
 		try {
 			load();
 		} catch (Exception e) {
-			e.printStackTrace();
+            Soar.LOGGER.error("Error while loading music", e);
 		}
 
 		this.musicPlayer = new MusicPlayer(() -> {
@@ -64,6 +66,7 @@ public class MusicManager {
 					try {
 						Thread.sleep(0);
 					} catch (InterruptedException e) {
+                        Soar.LOGGER.error("Error while playing music", e);
 					}
 					musicPlayer.run();
 				}
@@ -81,7 +84,7 @@ public class MusicManager {
 			return;
 		}
 
-		for (File f : musicDir.listFiles()) {
+		for (File f : Objects.requireNonNull(musicDir.listFiles())) {
 
 			String name = f.getName();
 
@@ -94,17 +97,15 @@ public class MusicManager {
 				byte[] imageData = null;
 
 				for (Metadata meta : metadata) {
-					if (meta instanceof VorbisComment) {
-						VorbisComment comment = (VorbisComment) meta;
-						if (comment.getCommentByName("TITLE").length > 0) {
+					if (meta instanceof VorbisComment comment) {
+                        if (comment.getCommentByName("TITLE").length > 0) {
 							title = comment.getCommentByName("TITLE")[0];
 						}
 						if (comment.getCommentByName("ARTIST").length > 0) {
 							artist = comment.getCommentByName("ARTIST")[0];
 						}
-					} else if (meta instanceof Picture) {
-						Picture picture = (Picture) meta;
-						imageData = picture.getImage();
+					} else if (meta instanceof Picture picture) {
+                        imageData = picture.getImage();
 					}
 				}
 
