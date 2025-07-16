@@ -86,7 +86,7 @@ public abstract class MixinMinecraftClient implements IMixinMinecraftClient {
 		JCefBrowser.close();
 	}
 
-	@Inject(method = "handleBlockBreaking", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "handleBlockBreaking", at = @At("HEAD"))
 	private void handleBlockBreaking(boolean breaking, CallbackInfo ci) {
 
 		if (OldAnimationsMod.getInstance().isEnabled() && OldAnimationsMod.getInstance().isOldBreaking()) {
