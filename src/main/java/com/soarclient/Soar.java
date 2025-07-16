@@ -4,6 +4,8 @@ import com.soarclient.animation.Delta;
 import com.soarclient.event.EventBus;
 import com.soarclient.event.server.PacketHandler;
 import com.soarclient.libraries.browser.JCefBrowser;
+import com.soarclient.libraries.material3.dynamiccolor.MaterialDynamicColors;
+import com.soarclient.logger.SoarLogger;
 import com.soarclient.management.color.ColorManager;
 import com.soarclient.management.config.ConfigManager;
 import com.soarclient.management.hypixel.HypixelManager;
@@ -16,10 +18,12 @@ import com.soarclient.skia.font.Fonts;
 import com.soarclient.utils.file.FileLocation;
 import com.soarclient.utils.language.I18n;
 import com.soarclient.utils.language.Language;
+import org.apache.logging.log4j.Logger;
 
 public class Soar {
 
-	private final static Soar instance = new Soar();
+    public static final Logger LOGGER = SoarLogger.getLogger();
+    private final static Soar instance = new Soar();
 
 	private final String name = "Soar-CN";
 	private final String version = "8.1";
@@ -56,6 +60,12 @@ public class Soar {
 		EventBus.getInstance().register(new SoarHandler());
 		EventBus.getInstance().register(new PacketHandler());
 		EventBus.getInstance().register(new Delta());
+
+        if (getClass().getClassLoader().getResource("assets/soar/logo.png") == null) {
+            LOGGER.error("Soar icon not found in resources!");
+        } else {
+            LOGGER.info("Soar icon found in resources");
+        }
 	}
 
 	public static Soar getInstance() {

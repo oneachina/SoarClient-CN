@@ -111,6 +111,15 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
 	}
+
+    doLast {
+        def resourcePath = sourceSets.main.resources.srcDirs[0]
+        def iconFile = new File(resourcePath, "assets/soar/logo.png")
+        if (!iconFile.exists()) {
+            throw new GradleException("Soar icon not found: ${iconFile.absolutePath}")
+        }
+        println "Found Soar icon at: ${iconFile.absolutePath}"
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
