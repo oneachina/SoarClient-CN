@@ -19,8 +19,6 @@
 package com.soarclient.libraries.material3.scheme;
 
 import com.soarclient.libraries.material3.palettes.CorePalette;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Represents a Material color scheme, a mapping of color roles to colors.
@@ -30,8 +28,6 @@ import lombok.Setter;
  *             for migration guidance.
  */
 
-@Setter
-@Getter
 @Deprecated
 public class Scheme {
 	private int primary;
