@@ -4,7 +4,6 @@ import com.soarclient.animation.Delta;
 import com.soarclient.event.EventBus;
 import com.soarclient.event.server.PacketHandler;
 import com.soarclient.libraries.browser.JCefBrowser;
-import com.soarclient.libraries.material3.dynamiccolor.MaterialDynamicColors;
 import com.soarclient.logger.SoarLogger;
 import com.soarclient.management.color.ColorManager;
 import com.soarclient.management.config.ConfigManager;
@@ -66,7 +65,7 @@ public class Soar {
         } else {
             LOGGER.info("Soar icon found in resources");
         }
-	}
+    }
 
 	public static Soar getInstance() {
 		return instance;
