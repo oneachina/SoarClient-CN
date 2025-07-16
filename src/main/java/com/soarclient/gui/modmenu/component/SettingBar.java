@@ -77,10 +77,9 @@ public class SettingBar extends Component {
 					nSetting.getStep());
 
 			slider.setHandler(new SliderHandler() {
-
 				@Override
-				public void onValueChanged(float value) {
-					nSetting.setValue(value);
+				public void onValueChanged(Object value) {
+                    nSetting.setValue((Float) value);
 				}
 			});
 

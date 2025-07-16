@@ -10,6 +10,7 @@ import com.soarclient.management.mod.api.hud.design.impl.ClassicDesign;
 import com.soarclient.management.mod.api.hud.design.impl.ClearDesign;
 import com.soarclient.management.mod.api.hud.design.impl.MaterialYouDesign;
 import com.soarclient.management.mod.api.hud.design.impl.SimpleDesign;
+import com.soarclient.management.mod.impl.fun.FakeFpsMod;
 import com.soarclient.management.mod.impl.hud.*;
 import com.soarclient.management.mod.impl.misc.DiscordRPCMod;
 import com.soarclient.management.mod.impl.misc.HypixelMod;
@@ -112,6 +113,9 @@ public class ModManager {
 		mods.add(new HUDModSettings());
 		mods.add(new ModMenuSettings());
 		mods.add(new SystemSettings());
+
+        //Fun
+        mods.add(new FakeFpsMod());
 
 		sortMods();
 	}

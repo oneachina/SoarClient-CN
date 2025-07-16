@@ -140,12 +140,8 @@ public class ModConfig extends Config {
 									}
 								}
 
-								if (s instanceof NumberSetting) {
-
-									NumberSetting ns = (NumberSetting) s;
-
-									ns.setValue(JsonUtils.getFloatProperty(settingJsonObject, s.getName(),
-											ns.getDefaultValue()));
+								if (s instanceof NumberSetting ns) {
+                                    ns.setValue(JsonUtils.getFloatProperty(settingJsonObject, s.getName(), ns.getValue()));
 								}
 
 								if (s instanceof StringSetting) {
