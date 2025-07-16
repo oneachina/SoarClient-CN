@@ -13,30 +13,44 @@ import net.minecraft.client.Keyboard;
 import net.minecraft.client.util.InputUtil;
 
 @Mixin(Keyboard.class)
-public class MixinKeyboard {
+public abstract class MixinKeyboard {
 
-	@Inject(method = "onKey", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;onKeyPressed(Lnet/minecraft/client/util/InputUtil$Key;)V", shift = At.Shift.AFTER))
-	public void onPressed(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
+    @Inject(
+        method = "onKey(JIIII)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/option/KeyBinding;onKeyPressed(Lnet/minecraft/client/util/InputUtil$Key;)V",
+            shift = At.Shift.AFTER
+        )
+    )
+    private void onKeyPressed(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
+        if (action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT) {
+            InputUtil.Key inputKey = InputUtil.fromKeyCode(key, scancode);
+            for (KeybindSetting setting : Soar.getInstance().getModManager().getKeybindSettings()) {
+                if (setting.getKey().equals(inputKey)) {
+                    setting.setPressed();
+                    setting.setKeyDown(true);
+                }
+            }
+        }
+    }
 
-		for (KeybindSetting s : Soar.getInstance().getModManager().getKeybindSettings()) {
-
-			if (s.getKey().equals(InputUtil.fromKeyCode(key, scancode))) {
-
-				if (action == GLFW.GLFW_PRESS) {
-					s.setPressed();
-				}
-
-				s.setKeyDown(true);
-			}
-		}
-	}
-
-	@Inject(method = "onKey", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;setKeyPressed(Lnet/minecraft/client/util/InputUtil$Key;Z)V", shift = At.Shift.AFTER, ordinal = 0))
-	public void onReleased(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-		for (KeybindSetting s : Soar.getInstance().getModManager().getKeybindSettings()) {
-			if (s.getKey().equals(InputUtil.fromKeyCode(key, scancode))) {
-				s.setKeyDown(false);
-			}
-		}
-	}
+    @Inject(
+        method = "onKey(JIIII)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/option/KeyBinding;setKeyPressed(Lnet/minecraft/client/util/InputUtil$Key;Z)V",
+            shift = At.Shift.AFTER
+        )
+    )
+    private void onKeyReleased(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
+        if (action == GLFW.GLFW_RELEASE) {
+            InputUtil.Key inputKey = InputUtil.fromKeyCode(key, scancode);
+            for (KeybindSetting setting : Soar.getInstance().getModManager().getKeybindSettings()) {
+                if (setting.getKey().equals(inputKey)) {
+                    setting.setKeyDown(false);
+                }
+            }
+        }
+    }
 }
