@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum ModCategory {
-	ALL("text.all"), HUD("text.hud"), RENDER("text.render"), PLAYER("text.player"), MISC("text.misc");
+	ALL("text.all"), HUD("text.hud"), RENDER("text.render"), PLAYER("text.player"), MISC("text.misc"), FUN("text.fun");
 
 	private String title;
 
