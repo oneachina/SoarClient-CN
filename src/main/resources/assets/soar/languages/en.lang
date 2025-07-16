@@ -177,6 +177,12 @@ mod.webbrowser.description=Display the Web Browser
 mod.forcemainhand.name=Force Main Hand
 mod.forcemainhand.description=Force the main hand to be set
 
+mod.watermark.name=Watermark
+mod.watermark.description=Display custom watermark text
+mode.icon=Icon
+
+setting.text=Text
+setting.text.description=Custom watermark text
 setting.darkmode=Dark Mode
 setting.darkmode.description=Enable dark mode
 setting.keybind=Keybind

@@ -174,6 +174,12 @@ mod.webbrowser.description=显示网页浏览器
 mod.forcemainhand.name=强制主手
 mod.forcemainhand.description=强制设置主手
 
+mod.watermark.name=水印
+mod.watermark.description=显示自定义水印文本
+mode.icon=图标
+
+setting.text=文本
+setting.text.description=自定义水印文本
 setting.darkmode=深色模式
 setting.darkmode.description=启用深色模式
 setting.keybind=快捷键
