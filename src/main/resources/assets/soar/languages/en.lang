@@ -323,6 +323,8 @@ setting.language=Language
 setting.language.description=Set the language
 setting.language.english=English
 setting.language.chinese=Chinese
+
+#fakefps mod
 setting.fakefps.mode=Fake FPS Mode
 setting.fakefps.mode.description=Set the fake fps mode
 setting.fakefps.multiplier=Fake FPS Multiplier
@@ -333,6 +335,16 @@ setting.fakefps.mode.real=Real
 setting.fakefps.mode.multiplied=Multiplied
 setting.fakefps.mode.random=Random
 setting.fakefps.mode.fixed=Fixed
+
+#auto gg mod
+setting.delay=Delay
+setting.delay.description=Set the delay
+setting.message=Message
+setting.message.description=Set the message
+setting.hypixel=Hypixel
+setting.hypixel.description=Set the hypixel
+setting.hypixel.mode=Hypixel Mode
+setting.hypixel.mode.description=Set the hypixel mode
 
 language.english=English
 language.chinese=中文
