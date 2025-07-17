@@ -5,7 +5,6 @@ import com.soarclient.management.mod.ModCategory;
 import com.soarclient.skia.font.Icon;
 
 public class NoJumpDelayMod extends Mod {
-	private int ticks = 0;
     private static NoJumpDelayMod instance;
 
 	public NoJumpDelayMod() {
