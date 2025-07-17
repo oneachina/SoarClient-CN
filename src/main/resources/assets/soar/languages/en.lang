@@ -344,5 +344,9 @@ setting.message.description=Set the message
 setting.hypixel=Hypixel
 setting.hypixel.description=Set the hypixel
 
+#Watermark
+setting.showLogo=Show Logo
+setting.showLogo.description=Show the logo
+
 language.english=English
 language.chinese=中文

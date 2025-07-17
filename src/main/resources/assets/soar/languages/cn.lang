@@ -339,5 +339,9 @@ setting.message.description=设置消息
 setting.hypixel=Hypixel
 setting.hypixel.description=设置Hypixel模式
 
+#Watermark mod
+setting.darkmode=深色模式
+setting.darkmode.description=启用深色模式
+
 language.english=English
 language.chinese=中文

@@ -1,30 +1,52 @@
 package com.soarclient.management.mod.impl.hud;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.io.InputStream;
 
 import com.soarclient.Soar;
 import com.soarclient.event.EventBus;
 import com.soarclient.event.client.RenderSkiaEvent;
+import com.soarclient.logger.SoarLogger;
 import com.soarclient.management.color.api.ColorPalette;
 import com.soarclient.management.mod.api.hud.HUDMod;
+import com.soarclient.management.mod.settings.impl.BooleanSetting;
+import com.soarclient.management.mod.settings.impl.NumberSetting;
 import com.soarclient.management.mod.settings.impl.StringSetting;
 import com.soarclient.skia.Skia;
 import com.soarclient.skia.font.Fonts;
 import com.soarclient.skia.font.Icon;
+import com.soarclient.utils.ColorUtils;
 
 import io.github.humbleui.skija.FontMetrics;
+import io.github.humbleui.skija.Image;
 import io.github.humbleui.types.Rect;
 
 public class WatermarkMod extends HUDMod {
 
     private static WatermarkMod instance;
+    private Image logoImage;
+    private long lastColorUpdate = 0;
+    private Color currentColor = Color.WHITE;
 
+    // Settings
     private StringSetting textSetting = new StringSetting("setting.text",
         "setting.text.description", Icon.TEXT_FIELDS, this, "Soar Client");
+    private BooleanSetting showLogoSetting = new BooleanSetting("setting.showLogo",
+        "setting.showLogo.description", Icon.IMAGE, this, true);
 
     public WatermarkMod() {
         super("mod.watermark.name", "mod.watermark.description", Icon.BRANDING_WATERMARK);
         instance = this;
+
+        try (InputStream is = getClass().getResourceAsStream("/assets/soar/logo.png")) {
+            if (is != null) {
+                byte[] imageData = is.readAllBytes();
+                this.logoImage = Image.makeDeferredFromEncodedBytes(imageData);
+            }
+        } catch (IOException e) {
+            SoarLogger.error("WatermarkMod", "Failed to load logo", e);
+        }
     }
 
     public static WatermarkMod getInstance() {
@@ -38,99 +60,94 @@ public class WatermarkMod extends HUDMod {
     private void draw() {
         try {
             this.begin();
-            drawTextMode();
+            drawContent();
         } catch (Exception e) {
-            System.err.println("Error in WatermarkMod.draw(): " + e.getMessage());
-            e.printStackTrace();
-            // 设置基本碰撞箱作为回退
+            SoarLogger.error("WatermarkMod", "Error in draw(): ", e);
             position.setSize(100, 20);
         } finally {
             try {
                 this.finish();
             } catch (Exception e) {
-                System.err.println("Error in finish(): " + e.getMessage());
+                SoarLogger.error("WatermarkMod", "Error in finish(): ", e);
             }
         }
     }
 
-    private void drawTextMode() {
+    private void drawContent() {
+        float padding = 5f;
+        float currentX = getX() + padding;
+        float contentHeight = 0;
+
+        if (showLogoSetting.isEnabled() && logoImage != null) {
+            float logoHeight = 23f;
+            float logoWidth = logoHeight * (logoImage.getWidth() / (float) logoImage.getHeight());
+
+            Skia.drawImage("logo.png", currentX, getY() + padding, logoWidth, logoHeight);
+            currentX += logoWidth + padding;
+            contentHeight = logoHeight;
+        }
+
+        // Draw text
         String text = textSetting.getValue();
-        float fontSize = 24; // 大字体
+        if (!text.isEmpty()) {
+            float fontSize = 24f;
+            Rect textBounds = Skia.getTextBounds(text, Fonts.getMedium(fontSize));
+            FontMetrics metrics = Fonts.getMedium(fontSize).getMetrics();
 
-        // 获取文本边界用于碰撞箱计算，使用粗体字体
-        Rect textBounds = Skia.getTextBounds(text, Fonts.getMedium(fontSize));
-        FontMetrics metrics = Fonts.getMedium(fontSize).getMetrics();
+            float textCenterY = (metrics.getAscent() - metrics.getDescent()) / 2 - metrics.getAscent();
+            float textY = getY() + padding + (contentHeight / 2) - textCenterY;
 
-        float width = textBounds.getWidth();
-        float height = fontSize;
-        float textCenterY = (metrics.getAscent() - metrics.getDescent()) / 2 - metrics.getAscent();
+            Color textColor = getSmoothAnimatedColor();
+            Skia.drawText(text, currentX, textY, textColor, Fonts.getMedium(fontSize));
 
-        // 获取动态渐变颜色
-        Color gradientColor = getAnimatedColor();
+            contentHeight = fontSize;
+            currentX += textBounds.getWidth() + padding;
+        }
 
-        // 直接绘制文字，使用粗体字体
-        Skia.drawText(text, getX(), getY() + (height / 2) - textCenterY,
-            gradientColor, Fonts.getMedium(fontSize));
-
-        // 设置碰撞箱大小，跟随文本动态变化
-        position.setSize(width, height);
+        position.setSize(currentX - getX() + padding, contentHeight + padding * 2);
     }
 
-    private Color getAnimatedColor() {
+    private Color getSmoothAnimatedColor() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastColorUpdate < 16) { // ~60fps
+            return currentColor;
+        }
+        lastColorUpdate = currentTime;
+
         try {
             ColorPalette palette = Soar.getInstance().getColorManager().getPalette();
-
             if (palette == null) {
                 return Color.WHITE;
             }
 
-            long currentTime = System.nanoTime();
-            double speed = 0.0000000002; // 缓慢的渐变速度
-            double cycle = (currentTime * speed) % (2 * Math.PI);
+            // Get colors from palette with fallbacks
+            Color color1 = palette.getPrimary() != null ? palette.getPrimary() : new Color(240,255,255);
+            Color color2 = palette.getSecondary() != null ? palette.getSecondary() : new Color(240,255,255);
+            Color color3 = palette.getTertiary() != null ? palette.getTertiary() : new Color(240,255,255);
 
-            Color color1 = palette.getPrimary();
-            Color color2 = palette.getSecondary();
-            Color color3 = palette.getTertiary();
+            double speed = 0.0001;
+            double cycle = (currentTime * speed) % 1.0;
 
-            // 确保颜色不为空
-            if (color1 == null) color1 = Color.WHITE;
-            if (color2 == null) color2 = Color.LIGHT_GRAY;
-            if (color3 == null) color3 = Color.GRAY;
+            double wave = Math.sin(cycle * Math.PI * 2);
+            double normalizedWave = (wave + 1) / 2;
 
-            // 三色循环渐变
-            double normalizedCycle = (cycle / (2 * Math.PI)) * 3;
-
-            Color resultColor;
-            if (normalizedCycle < 1) {
-                float factor = (float) normalizedCycle;
-                resultColor = blendColors(color1, color2, factor);
-            } else if (normalizedCycle < 2) {
-                float factor = (float) (normalizedCycle - 1);
-                resultColor = blendColors(color2, color3, factor);
+            if (normalizedWave < 0.33) {
+                currentColor = ColorUtils.blend(color1, color2, (float) (normalizedWave * 3));
+            } else if (normalizedWave < 0.66) {
+                currentColor = ColorUtils.blend(color2, color3, (float) ((normalizedWave - 0.33) * 3));
             } else {
-                float factor = (float) (normalizedCycle - 2);
-                resultColor = blendColors(color3, color1, factor);
+                currentColor = ColorUtils.blend(color3, color1, (float) ((normalizedWave - 0.66) * 3));
             }
 
-            return resultColor;
-
+            return currentColor;
         } catch (Exception e) {
-            System.err.println("Error in getAnimatedColor: " + e.getMessage());
+            SoarLogger.error("WatermarkMod", "Error in getSmoothAnimatedColor(): ", e);
             return Color.WHITE;
         }
     }
 
-    private Color blendColors(Color color1, Color color2, float factor) {
-        int red = (int) (color1.getRed() * (1 - factor) + color2.getRed() * factor);
-        int green = (int) (color1.getGreen() * (1 - factor) + color2.getGreen() * factor);
-        int blue = (int) (color1.getBlue() * (1 - factor) + color2.getBlue() * factor);
-        int alpha = (int) (color1.getAlpha() * (1 - factor) + color2.getAlpha() * factor);
-
-        return new Color(red, green, blue, alpha);
-    }
-
     @Override
     public float getRadius() {
-        return 0; // 无背景，无圆角
+        return 4f;
     }
 }
