@@ -337,9 +337,7 @@ setting.delay.description=设置延迟
 setting.message=消息
 setting.message.description=设置消息
 setting.hypixel=Hypixel
-setting.hypixel.description=Hypixel
-setting.hypixel.mode=Hypixel模式
-setting.hypixel.mode.description=设置Hypixel模式
+setting.hypixel.description=设置Hypixel模式
 
 language.english=English
 language.chinese=中文

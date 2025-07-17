@@ -343,8 +343,6 @@ setting.message=Message
 setting.message.description=Set the message
 setting.hypixel=Hypixel
 setting.hypixel.description=Set the hypixel
-setting.hypixel.mode=Hypixel Mode
-setting.hypixel.mode.description=Set the hypixel mode
 
 language.english=English
 language.chinese=中文
