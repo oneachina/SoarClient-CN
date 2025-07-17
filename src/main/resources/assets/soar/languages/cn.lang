@@ -34,6 +34,9 @@ mod.modmenu.description=自定义模组菜单相关设置
 mod.fpsdisplay.name=帧率显示
 mod.fpsdisplay.description=显示Minecraft帧率
 
+mod.fakefps.name=假帧率
+mod.fakefps.description=显示假帧率
+
 mod.coords.name=坐标
 mod.coords.description=显示你的坐标
 
@@ -75,6 +78,9 @@ mod.keystrokes.description=显示按下的键
 
 mod.mousestrokes.name=鼠标动作
 mod.mousestrokes.description=显示鼠标移动
+
+mod.cpsdisplay.name=CPS显示
+mod.cpsdisplay.description=显示CPS
 
 mod.musicinfo.name=音乐信息
 mod.musicinfo.description=显示当前播放的音乐
@@ -312,6 +318,16 @@ setting.opacity=不透明度
 setting.opacity.description=设置不透明度
 setting.left=左
 setting.right=右
+setting.fakefps.mode=假帧率模式
+setting.fakefps.mode.description=设置假帧率模式
+setting.fakefps.multiplier=假帧率倍率
+setting.fakefps.multiplier.description=设置假帧率倍率
+setting.fakefps.randomdigits=假帧率随机位数
+setting.fakefps.randomdigits.description=设置假帧率随机位数
+setting.fakefps.mode.real=真实帧率
+setting.fakefps.mode.multiplied=倍率帧率
+setting.fakefps.mode.random=随机帧率
+setting.fakefps.mode.fixed=固定帧率
 
 language.english=English
 language.chinese=中文

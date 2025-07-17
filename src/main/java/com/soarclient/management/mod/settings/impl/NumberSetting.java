@@ -23,19 +23,6 @@ public class NumberSetting extends Setting {
 		Soar.getInstance().getModManager().addSetting(this);
 	}
 
-    public NumberSetting(String name, String description, String icon, Mod parent, int defaultIntValue, int minValue,
-                         int maxValue) {
-        super(name, description, icon, parent);
-
-        this.value = defaultValue;
-        this.defaultValue = defaultValue;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-        this.step = 1;
-
-        Soar.getInstance().getModManager().addSetting(this);
-    }
-
 	@Override
 	public void reset() {
 		setValue(defaultValue);

@@ -34,6 +34,9 @@ mod.modmenu.description=Customize Mod Menu related settings
 mod.fpsdisplay.name=FPS Display
 mod.fpsdisplay.description=Display Minecraft FPS
 
+mod.fakefps.name=Fake Fps Display
+mod.fakefps.description=Display Fake Fps
+
 mod.coords.name=Coords
 mod.coords.description=Display your coordnates
 
@@ -75,6 +78,9 @@ mod.keystrokes.description=Display pressed keys
 
 mod.mousestrokes.name=Mouse Strokes
 mod.mousestrokes.description=Display mouse movements
+
+mod.cpsdisplay.name=CPS Display
+mod.cpsdisplay.description=Display CPS
 
 mod.musicinfo.name=Music Info
 mod.musicinfo.description=Display the currently playing music
@@ -317,6 +323,16 @@ setting.language=Language
 setting.language.description=Set the language
 setting.language.english=English
 setting.language.chinese=Chinese
+setting.fakefps.mode=Fake FPS Mode
+setting.fakefps.mode.description=Set the fake fps mode
+setting.fakefps.multiplier=Fake FPS Multiplier
+setting.fakefps.multiplier.description=Set the fake fps multiplier
+setting.fakefps.randomdigits=Fake FPS Random Digits
+setting.fakefps.randomdigits.description=Set the fake fps random digits
+setting.fakefps.mode.real=Real
+setting.fakefps.mode.multiplied=Multiplied
+setting.fakefps.mode.random=Random
+setting.fakefps.mode.fixed=Fixed
 
 language.english=English
 language.chinese=中文

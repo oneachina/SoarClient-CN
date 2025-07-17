@@ -82,6 +82,7 @@ public class ModManager {
 		mods.add(new WeatherDisplayMod());
 		mods.add(new YawDisplayMod());
         mods.add(new WatermarkMod());
+        mods.add(new CpsDisplayMod());
 
 		// Player
 		mods.add(new AutoGGMod());
