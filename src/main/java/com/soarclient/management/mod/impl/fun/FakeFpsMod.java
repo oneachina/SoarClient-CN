@@ -8,7 +8,6 @@ import com.soarclient.skia.font.Icon;
 
 public class FakeFpsMod extends SimpleHUDMod {
     private NumberSetting fakefps = new NumberSetting("FakeFps", "set fake fps", Icon.SELECT, this, 120, 0, Integer.MAX_VALUE);
-    double random = Math.random();
 
     public FakeFpsMod() {
         super("FakeFpsMod", "FakeFpsMod", Icon._60FPS);
@@ -21,7 +20,8 @@ public class FakeFpsMod extends SimpleHUDMod {
 
     @Override
     public String getText() {
-        return (int) fakefps.getValue() + (int) random + " FPS";
+        int fps = (int) fakefps.getValue() + mc.getCurrentFps();
+        return fps + " FPS";
     }
 
     @Override
