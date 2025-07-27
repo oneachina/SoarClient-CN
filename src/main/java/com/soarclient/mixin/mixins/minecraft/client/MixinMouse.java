@@ -1,5 +1,8 @@
 package com.soarclient.mixin.mixins.minecraft.client;
 
+import com.soarclient.event.client.MouseClickEvent;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +18,7 @@ import net.minecraft.client.Mouse;
 import net.minecraft.client.util.InputUtil.Type;
 
 @Mixin(Mouse.class)
-public class MixinMouse {
+public abstract class MixinMouse {
 
 	@Inject(method = "onMouseButton", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;onKeyPressed(Lnet/minecraft/client/util/InputUtil$Key;)V", shift = At.Shift.AFTER))
 	public void onPressed(long window, int button, int action, int mods, CallbackInfo ci) {
@@ -41,6 +44,24 @@ public class MixinMouse {
 			}
 		}
 	}
+
+    @Inject(method = "onMouseButton", at = @At("HEAD"))
+    private void onMouseButton(long window, int button, int action, int mods, CallbackInfo ci) {
+        if (action == GLFW.GLFW_PRESS) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            if (client == null) return;
+
+            double rawX = client.mouse.getX();
+            double rawY = client.mouse.getY();
+
+            Window win = client.getWindow();
+            double scaleFactor = win.getScaleFactor();
+            double scaledX = rawX / scaleFactor;
+            double scaledY = win.getScaledHeight() - (rawY / scaleFactor);
+
+            EventBus.getInstance().post(new MouseClickEvent(button, scaledX, scaledY));
+        }
+    }
 
 	@Inject(method = "onMouseScroll", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;setSelectedSlot(I)V", shift = At.Shift.BEFORE), cancellable = true)
 	private void onMouseScroll(long window, double horizontal, double vertical, CallbackInfo ci) {

@@ -31,9 +31,12 @@ public class BloodParticleMod extends Mod {
 
 	public final EventBus.EventListener<AttackEntityEvent> onAttackEntity = event -> {
 
-		Entity target = mc.world.getEntityById(event.getEntityId());
+        Entity target = null;
+        if (mc.world != null) {
+            target = mc.world.getEntityById(event.getEntityId());
+        }
 
-		if (target != null && target instanceof LivingEntity) {
+        if (target instanceof LivingEntity) {
 			for (int i = 0; i < multiplierSetting.getValue(); i++) {
 				mc.particleManager.addEmitter(target,
 						new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.REDSTONE_BLOCK.getDefaultState()));

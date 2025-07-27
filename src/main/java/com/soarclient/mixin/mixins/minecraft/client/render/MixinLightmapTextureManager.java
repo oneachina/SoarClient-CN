@@ -14,7 +14,7 @@ public class MixinLightmapTextureManager {
     @ModifyExpressionValue(method = "update(F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/SimpleOption;getValue()Ljava/lang/Object;", ordinal = 1))
     private Object injectFullBright(Object original) {
         if (FullbrightMod.getInstance().isEnabled()) {
-            return Double.valueOf(FullbrightMod.getInstance().getGamma());
+            return (double) FullbrightMod.getInstance().getGamma();
         }
         return original;
     }

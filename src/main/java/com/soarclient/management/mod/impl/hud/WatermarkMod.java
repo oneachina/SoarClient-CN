@@ -11,7 +11,6 @@ import com.soarclient.logger.SoarLogger;
 import com.soarclient.management.color.api.ColorPalette;
 import com.soarclient.management.mod.api.hud.HUDMod;
 import com.soarclient.management.mod.settings.impl.BooleanSetting;
-import com.soarclient.management.mod.settings.impl.NumberSetting;
 import com.soarclient.management.mod.settings.impl.StringSetting;
 import com.soarclient.skia.Skia;
 import com.soarclient.skia.font.Fonts;

@@ -343,5 +343,40 @@ setting.hypixel.description=设置Hypixel模式
 setting.darkmode=深色模式
 setting.darkmode.description=启用深色模式
 
+#AutoPlay mod
+mod.autoplay.name=自动游玩
+mod.autoplay.desc=再来一局
+setting.autoplay.mode.heypixel=Heypixel
+setting.autoplay.mode=自动游玩模式
+setting.autoplay.mode.description=自动游玩模式
+
+#AutoText
+mod.autotext.name=自动文本
+mod.autotext.description=启用自动文本
+setting.text1key=文本1的键
+setting.text1key.description=设置文本1的键
+setting.text1=文本1
+setting.text1.description=设置文本1
+setting.text2key=文本2的键
+setting.text2key.description=设置文本2的键
+setting.text2=文本2
+setting.text2.description=设置文本2
+setting.text3key=文本3的键
+setting.text3key.description=设置文本3的键
+setting.text3=文本3
+setting.text3.description=设置文本3
+
+# ClickEffect mod
+mod.clickeffect.name=点击效果
+mod.clickeffect.description=点击效果
+setting.clickeffect.color=颜色
+setting.clickeffect.color.description=设置颜色
+setting.clickeffect.radius=半径
+setting.clickeffect.radius.description=设置半径
+setting.clickeffect.duration=持续时间
+setting.clickeffect.duration.description=设置持续时间
+setting.clickeffect.menuonly=菜单专用模式
+setting.clickeffect.menuonly.description=设置菜单专用模式
+
 language.english=English
 language.chinese=中文

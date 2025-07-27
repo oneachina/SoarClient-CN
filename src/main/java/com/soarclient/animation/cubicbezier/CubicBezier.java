@@ -34,7 +34,12 @@ public class CubicBezier extends Animation {
 		}
 	}
 
-	private float evaluateCubic(float a, float b, float m) {
+    @Override
+    protected double getEquation(double x) {
+        return 0;
+    }
+
+    private float evaluateCubic(float a, float b, float m) {
 		return 3 * a * (1 - m) * (1 - m) * m + 3 * b * (1 - m) * m * m + m * m * m;
 	}
 }

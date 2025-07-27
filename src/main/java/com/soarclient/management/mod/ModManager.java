@@ -4,34 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.soarclient.management.mod.api.hud.HUDMod;
-import com.soarclient.management.mod.api.hud.design.HUDDesign;
-import com.soarclient.management.mod.api.hud.design.impl.ClassicDesign;
-import com.soarclient.management.mod.api.hud.design.impl.ClearDesign;
-import com.soarclient.management.mod.api.hud.design.impl.MaterialYouDesign;
-import com.soarclient.management.mod.api.hud.design.impl.SimpleDesign;
-import com.soarclient.management.mod.impl.fun.FakeFpsMod;
+import com.soarclient.Soar;
+import com.soarclient.management.mod.api.hud.*;
+import com.soarclient.management.mod.api.hud.design.*;
+import com.soarclient.management.mod.api.hud.design.impl.*;
+import com.soarclient.management.mod.impl.fun.*;
 import com.soarclient.management.mod.impl.hud.*;
-import com.soarclient.management.mod.impl.misc.DiscordRPCMod;
-import com.soarclient.management.mod.impl.misc.HypixelMod;
-import com.soarclient.management.mod.impl.misc.TimeChangerMod;
-import com.soarclient.management.mod.impl.misc.WeatherChangerMod;
+import com.soarclient.management.mod.impl.misc.*;
 import com.soarclient.management.mod.impl.player.*;
-import com.soarclient.management.mod.impl.render.BloodParticleMod;
-import com.soarclient.management.mod.impl.render.CustomHandMod;
-import com.soarclient.management.mod.impl.render.FullbrightMod;
-import com.soarclient.management.mod.impl.render.MusicWaveformMod;
-import com.soarclient.management.mod.impl.render.OverlayEditorMod;
-import com.soarclient.management.mod.impl.render.ParticlesMod;
-import com.soarclient.management.mod.impl.render.ProjectileTrailMod;
-import com.soarclient.management.mod.impl.settings.HUDModSettings;
-import com.soarclient.management.mod.impl.settings.ModMenuSettings;
-import com.soarclient.management.mod.impl.settings.SystemSettings;
+import com.soarclient.management.mod.impl.render.*;
+import com.soarclient.management.mod.impl.settings.*;
 import com.soarclient.management.mod.settings.Setting;
 import com.soarclient.management.mod.settings.impl.KeybindSetting;
 
 public class ModManager {
-
 	private List<Mod> mods = new ArrayList<>();
 	private List<Setting> settings = new ArrayList<>();
 	private List<HUDDesign> designs = new ArrayList<>();
@@ -86,6 +72,8 @@ public class ModManager {
 		mods.add(new SnapTapMod());
 		mods.add(new TaplookMod());
 		mods.add(new ZoomMod());
+        mods.add(new AutoTextMod());
+        mods.add(new AutoPlayMod());
 
 		// Render
 		mods.add(new BloodParticleMod());
@@ -95,6 +83,7 @@ public class ModManager {
 		mods.add(new OverlayEditorMod());
 		mods.add(new ParticlesMod());
 		mods.add(new ProjectileTrailMod());
+        mods.add(new ClickEffectMod());
 
 		// Misc
 		mods.add(new DiscordRPCMod());
@@ -111,6 +100,8 @@ public class ModManager {
         mods.add(new FakeFpsMod());
 
 		sortMods();
+        ClickEffectMod clickEffectMod = new ClickEffectMod();
+        clickEffectMod.setEnabled(true);
 	}
 
 	private void initDesigns() {

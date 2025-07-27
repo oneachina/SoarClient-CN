@@ -348,5 +348,28 @@ setting.hypixel.description=Set the hypixel
 setting.showLogo=Show Logo
 setting.showLogo.description=Show the logo
 
+#AutoPlay mod
+mod.autoplay.name=Auto Play
+mod.autoplay.desc=Set the auto play
+setting.autoplay.mode.heypixel_sw=Heypixel sw
+setting.autoplay.mode.description=Set the heypixel sw mode
+
+#Auto Text
+mod.autotext.name=Auto Text
+mod.autotext.description=Set the auto text
+setting.text1key=Text 1 Key
+setting.text1key.description=Set the text 1 key
+setting.text1=Text 1
+setting.text1.description=Set the text 1
+setting.text2key=Text 2 Key
+setting.text2key.description=Set the text 2 key
+setting.text2=Text 2
+setting.text2.description=Set the text 2
+setting.text3key=Text 3 Key
+setting.text3key.description=Set the text 3 key
+setting.text3=Text 3
+setting.text3.description=Set the text 3
+
+
 language.english=English
 language.chinese=中文

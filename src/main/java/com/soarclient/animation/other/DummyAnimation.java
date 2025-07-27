@@ -22,7 +22,7 @@ public class DummyAnimation extends Animation {
 
 	@Override
 	public float getValue() {
-		timePassed += Delta.getDeltaTime();
+		timePassed += (float) Delta.getDeltaTime();
 		return value;
 	}
 
@@ -30,4 +30,9 @@ public class DummyAnimation extends Animation {
 	protected float animate(float x) {
 		return x;
 	}
+
+    @Override
+    protected double getEquation(double x) {
+        return 0;
+    }
 }

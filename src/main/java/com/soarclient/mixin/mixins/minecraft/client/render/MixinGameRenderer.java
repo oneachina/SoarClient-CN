@@ -33,7 +33,7 @@ public class MixinGameRenderer {
 		SkiaContext.draw((context) -> {
 			Skia.save();
 			Skia.scale((float) MinecraftClient.getInstance().getWindow().getScaleFactor());
-			EventBus.getInstance().post(new RenderSkiaEvent());
+			EventBus.getInstance().post(new RenderSkiaEvent(context));
 			Skia.restore();
 		});
 	}

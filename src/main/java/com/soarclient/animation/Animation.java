@@ -1,11 +1,11 @@
 package com.soarclient.animation;
 
 public abstract class Animation {
-
 	protected float duration;
 	protected float start;
 	protected float change;
 	protected float timePassed = 0;
+
 
 	public Animation(float duration, float start, float end) {
 
@@ -17,7 +17,7 @@ public abstract class Animation {
 
 	public float getValue() {
 
-		timePassed += Delta.getDeltaTime();
+		timePassed += (float) Delta.getDeltaTime();
 
 		if (timePassed >= duration) {
 			return start + change;
@@ -35,4 +35,11 @@ public abstract class Animation {
 	}
 
 	protected abstract float animate(float x);
+
+    protected boolean correctOutput() { return false; }
+    protected abstract double getEquation(double x);
+
+    public void reset() {
+        timePassed = 0;
+    }
 }
