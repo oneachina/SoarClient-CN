@@ -84,11 +84,6 @@ public class ClickEffectMod extends Mod {
     }
 
     public final EventBus.EventListener<MouseClickEvent> onMouseClick = event -> {
-        boolean inMenu = MinecraftClient.getInstance().currentScreen != null;
-        if (!menuOnlySetting.isEnabled() && inMenu) {
-            return;
-        }
-
         ripples.add(new RippleEffect(
             (float) event.getMouseX(),
             (float) event.getMouseY(),
@@ -98,11 +93,6 @@ public class ClickEffectMod extends Mod {
     };
 
     public final EventBus.EventListener<RenderSkiaEvent> onRenderSkia = event -> {
-        boolean inMenu = MinecraftClient.getInstance().currentScreen != null;
-        if (!menuOnlySetting.isEnabled() && inMenu) {
-            return;
-        }
-
         Window window = MinecraftClient.getInstance().getWindow();
         windowWidth = window.getScaledWidth();
         windowHeight = window.getScaledHeight();

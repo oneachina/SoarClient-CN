@@ -50,16 +50,17 @@ public abstract class MixinMouse {
         if (action == GLFW.GLFW_PRESS) {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client == null) return;
+            if (client.currentScreen != null) {
+                double rawX = client.mouse.getX();
+                double rawY = client.mouse.getY();
 
-            double rawX = client.mouse.getX();
-            double rawY = client.mouse.getY();
+                Window win = client.getWindow();
+                double scaleFactor = win.getScaleFactor();
+                double scaledX = rawX / scaleFactor;
+                double scaledY = win.getScaledHeight() - (rawY / scaleFactor);
 
-            Window win = client.getWindow();
-            double scaleFactor = win.getScaleFactor();
-            double scaledX = rawX / scaleFactor;
-            double scaledY = win.getScaledHeight() - (rawY / scaleFactor);
-
-            EventBus.getInstance().post(new MouseClickEvent(button, scaledX, scaledY));
+                EventBus.getInstance().post(new MouseClickEvent(button, scaledX, scaledY));
+            }
         }
     }
 

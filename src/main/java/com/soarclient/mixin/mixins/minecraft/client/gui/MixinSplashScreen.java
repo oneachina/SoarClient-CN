@@ -23,6 +23,18 @@ public abstract class MixinSplashScreen {
     @Unique
     private static final float LOGO_SCALE = 0.15f;
 
+    // 进度条设置
+    @Unique
+    private static final int PROGRESS_BAR_HEIGHT = 8;
+    @Unique
+    private static final int PROGRESS_BAR_WIDTH = 300;
+    @Unique
+    private static final int PROGRESS_BAR_CORNER_RADIUS = 4;
+    @Unique
+    private static final int PROGRESS_BAR_PADDING = 2;
+    @Unique
+    private static final int PROGRESS_BAR_Y_OFFSET = 40; // Logo下方偏移量
+
     @Inject(method = "render", at = @At("TAIL"))
     private void SoarSplashScreen(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 
@@ -69,11 +81,89 @@ public abstract class MixinSplashScreen {
                 );
             } finally {
                 context.getMatrices().pop();
+
+                // ============= 添加进度条 =============
+                int progressBarX = (width - PROGRESS_BAR_WIDTH) / 2;
+                int progressBarY = (height + (int)(LOGO_ACTUAL_SIZE * LOGO_SCALE) / 2) + PROGRESS_BAR_Y_OFFSET;
+
+                // 计算加载进度 (0.0 - 1.0)
+                float progress = Math.min(1.0f, (float) timePassed / minDisplayTime);
+
+                // 绘制进度条背景
+                int backgroundColor = (int)(alpha * 100) << 24; // 半透明黑色背景
+                context.fill(
+                    progressBarX - PROGRESS_BAR_PADDING,
+                    progressBarY - PROGRESS_BAR_PADDING,
+                    progressBarX + PROGRESS_BAR_WIDTH + PROGRESS_BAR_PADDING,
+                    progressBarY + PROGRESS_BAR_HEIGHT + PROGRESS_BAR_PADDING,
+                    backgroundColor
+                );
+
+                // 绘制进度条轨道
+                int trackColor = (int)(alpha * 50) << 24; // 更暗的背景
+                context.fill(
+                    progressBarX,
+                    progressBarY,
+                    progressBarX + PROGRESS_BAR_WIDTH,
+                    progressBarY + PROGRESS_BAR_HEIGHT,
+                    trackColor
+                );
+
+                // 绘制进度条前景
+                int progressWidth = (int)(PROGRESS_BAR_WIDTH * progress);
+                int progressColor = 0xFFFFFFFF; // 白色
+                context.fill(
+                    progressBarX,
+                    progressBarY,
+                    progressBarX + progressWidth,
+                    progressBarY + PROGRESS_BAR_HEIGHT,
+                    progressColor
+                );
+
+                // 绘制进度条圆角效果
+                if (progressWidth > PROGRESS_BAR_CORNER_RADIUS) {
+                    // 左上角圆角
+                    context.fill(
+                        progressBarX,
+                        progressBarY,
+                        progressBarX + PROGRESS_BAR_CORNER_RADIUS,
+                        progressBarY + PROGRESS_BAR_CORNER_RADIUS,
+                        trackColor
+                    );
+
+                    // 左下角圆角
+                    context.fill(
+                        progressBarX,
+                        progressBarY + PROGRESS_BAR_HEIGHT - PROGRESS_BAR_CORNER_RADIUS,
+                        progressBarX + PROGRESS_BAR_CORNER_RADIUS,
+                        progressBarY + PROGRESS_BAR_HEIGHT,
+                        trackColor
+                    );
+
+                    // 右上角圆角（只在进度条末端绘制）
+                    if (progressWidth > PROGRESS_BAR_WIDTH - PROGRESS_BAR_CORNER_RADIUS) {
+                        int endX = progressBarX + progressWidth;
+                        context.fill(
+                            endX - PROGRESS_BAR_CORNER_RADIUS,
+                            progressBarY,
+                            endX,
+                            progressBarY + PROGRESS_BAR_CORNER_RADIUS,
+                            trackColor
+                        );
+
+                        context.fill(
+                            endX - PROGRESS_BAR_CORNER_RADIUS,
+                            progressBarY + PROGRESS_BAR_HEIGHT - PROGRESS_BAR_CORNER_RADIUS,
+                            endX,
+                            progressBarY + PROGRESS_BAR_HEIGHT,
+                            trackColor
+                        );
+                    }
+                }
+
                 RenderSystem.disableBlend();
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F); // 重置颜色
             }
         }
     }
 }
-
-// SoarClient-fork MixinSplashScreen
